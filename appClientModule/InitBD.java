@@ -9,7 +9,9 @@ import javax.persistence.PersistenceException;
 import entities.CategorieVehicule;
 import entities.EnumCatPrix;
 import entities.EnumMarque;
+import entities.EnumTypePlace;
 import entities.EnumUnite;
+import entities.Place;
 import entities.Vehicule;
 import session.*;
 
@@ -47,6 +49,19 @@ public class InitBD {
 			service.addVehicule(new Vehicule(new GregorianCalendar(2015, 8, 8), "Rouge", EnumCatPrix.Emotion, EnumMarque.BMW, "M3"));
 			// ======================================
 			// FIN VEHICULES            
+			// ======================================
+			
+			// ======================================
+			// PLACES            
+			// ======================================
+			for (int i = 0; i < 20; i++) {
+				service.addPlace(new Place(EnumTypePlace.Voiture));
+			}
+			for (int i = 0; i < 10; i++) {
+				service.addPlace(new Place(EnumTypePlace.Vélo));
+			}
+			// ======================================
+			// FIN PLACES            
 			// ======================================
 			
 		} catch (PersistenceException pe) {
