@@ -5,6 +5,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.persistence.PersistenceException;
 import entities.CategorieVehicule;
+import entities.Unite;
 import session.*;
 
 public class InitBD {
@@ -16,8 +17,8 @@ public class InitBD {
 			IMobiOsLoRemote service = (IMobiOsLoRemote) ctx.lookup("ejb:PProgDist_EAP/PProgDist_EAPEJB/MobiOsLoService!session.IMobiOsLoRemote?stateful");
 
 			// Création et insertion catégories dans la base
-			service.addCatVehicule(new CategorieVehicule("A",2.0,12.0,0));
-			service.addCatVehicule(new CategorieVehicule("B",3.0,14.0,0));
+			service.addCatVehicule(new CategorieVehicule("A",2.0,3.0,Unite.Heure));
+			service.addCatVehicule(new CategorieVehicule("B",3.0,14.1,Unite.Minute));
 
 			// Lister les catégories
 			List<CategorieVehicule> catVehicules = service.getCatVehicules();
