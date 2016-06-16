@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -12,11 +13,16 @@ import entities.EnumMarque;
 import entities.EnumTypePlace;
 import entities.EnumUnite;
 import entities.Place;
+import entities.Station;
 import entities.Vehicule;
 import session.*;
 
 public class InitBD {
 	public static void main(String[] args) {
+		
+		ArrayList<Place> places = new ArrayList<Place>();
+		ArrayList<Vehicule> vehicules = new ArrayList<Vehicule>();
+		
 		try {
 			Properties prop = new Properties();
 			prop.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
@@ -42,11 +48,12 @@ public class InitBD {
 			// ======================================
 			// VEHICULES            
 			// ======================================
-			service.addVehicule(new Vehicule(new GregorianCalendar(2014, 0, 1), "Bleu", EnumCatPrix.Budget, EnumMarque.Audi, "A1"));
-			service.addVehicule(new Vehicule(new GregorianCalendar(2010, 4, 12), "Gris", EnumCatPrix.Cabrio, EnumMarque.BMW, "Z3"));
-			service.addVehicule(new Vehicule(new GregorianCalendar(2001, 2, 14), "Noir", EnumCatPrix.Economy, EnumMarque.Dacia, "Entry"));
-			service.addVehicule(new Vehicule(new GregorianCalendar(2012, 1, 7), "Blanc", EnumCatPrix.Electro, EnumMarque.Renault, "Zoe"));
-			service.addVehicule(new Vehicule(new GregorianCalendar(2015, 8, 8), "Rouge", EnumCatPrix.Emotion, EnumMarque.BMW, "M3"));
+			// Ajout véhicules dans une liste
+			vehicules.add(new Vehicule(new GregorianCalendar(2014, 0, 1), "Bleu", EnumCatPrix.Budget, EnumMarque.Audi, "A1"));			
+			vehicules.add(new Vehicule(new GregorianCalendar(2010, 4, 12), "Gris", EnumCatPrix.Cabrio, EnumMarque.BMW, "Z3"));
+			vehicules.add(new Vehicule(new GregorianCalendar(2001, 2, 14), "Noir", EnumCatPrix.Economy, EnumMarque.Dacia, "Entry"));
+			vehicules.add(new Vehicule(new GregorianCalendar(2012, 1, 7), "Blanc", EnumCatPrix.Electro, EnumMarque.Renault, "Zoe"));
+			vehicules.add(new Vehicule(new GregorianCalendar(2015, 8, 8), "Rouge", EnumCatPrix.Emotion, EnumMarque.BMW, "M3"));			
 			// ======================================
 			// FIN VEHICULES            
 			// ======================================
@@ -55,13 +62,37 @@ public class InitBD {
 			// PLACES            
 			// ======================================
 			for (int i = 0; i < 20; i++) {
-				service.addPlace(new Place(EnumTypePlace.Voiture));
+				Place p = new Place(EnumTypePlace.Voiture);
+				places.add(p);
+				//service.addPlace(new Place(EnumTypePlace.Voiture));
 			}
 			for (int i = 0; i < 10; i++) {
-				service.addPlace(new Place(EnumTypePlace.Vélo));
+				Place p = new Place(EnumTypePlace.Vélo);
+				places.add(p);
+				//service.addPlace(new Place(EnumTypePlace.Vélo));
+			}
+			
+			// Ajout des véhicules dans les places
+			for (int i = 0; i < vehicules.size(); i++) {				
+				places.get(i).setVehicule(vehicules.get(i));			
+				places.get(i).getVehicule().setPlace(places.get(i));
 			}
 			// ======================================
 			// FIN PLACES            
+			// ======================================
+			
+			// ======================================
+			// STATIONS      
+			// ======================================
+			Station station = new Station(0, 0, "STATION A", "Suisse", "Yverdon");
+			for (Place place : places) {
+				station.addPlace(place);
+			}
+			service.addStation(station);
+			//service.addStation(new Station(0, 0, "STATION A", "Suisse", "Yverdon"));
+			
+			// ======================================
+			// FIN STATIONS            
 			// ======================================
 			
 		} catch (PersistenceException pe) {
