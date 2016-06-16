@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
@@ -35,12 +34,7 @@ public class InitBD {
 			// Création et insertion catégories dans la base
 			service.addCatVehicule(new CategorieVehicule("A",2.0,3.0,EnumUnite.Heure));
 			service.addCatVehicule(new CategorieVehicule("B",3.0,14.1,EnumUnite.Minute));
-
-			// Lister les catégories
-			List<CategorieVehicule> catVehicules = service.getCatVehicules();
-			for (CategorieVehicule cv : catVehicules) {
-				System.out.println(cv);
-			}
+			
 			// ======================================
 			// FIN CATEGORIE DE VEHICULES            
 			// ======================================
@@ -53,7 +47,8 @@ public class InitBD {
 			vehicules.add(new Vehicule(new GregorianCalendar(2010, 4, 12), "Gris", EnumCatPrix.Cabrio, EnumMarque.BMW, "Z3"));
 			vehicules.add(new Vehicule(new GregorianCalendar(2001, 2, 14), "Noir", EnumCatPrix.Economy, EnumMarque.Dacia, "Entry"));
 			vehicules.add(new Vehicule(new GregorianCalendar(2012, 1, 7), "Blanc", EnumCatPrix.Electro, EnumMarque.Renault, "Zoe"));
-			vehicules.add(new Vehicule(new GregorianCalendar(2015, 8, 8), "Rouge", EnumCatPrix.Emotion, EnumMarque.BMW, "M3"));			
+			vehicules.add(new Vehicule(new GregorianCalendar(2015, 8, 8), "Rouge", EnumCatPrix.Emotion, EnumMarque.BMW, "M3"));	
+			
 			// ======================================
 			// FIN VEHICULES            
 			// ======================================
@@ -64,12 +59,10 @@ public class InitBD {
 			for (int i = 0; i < 20; i++) {
 				Place p = new Place(EnumTypePlace.Voiture);
 				places.add(p);
-				//service.addPlace(new Place(EnumTypePlace.Voiture));
 			}
 			for (int i = 0; i < 10; i++) {
 				Place p = new Place(EnumTypePlace.Vélo);
 				places.add(p);
-				//service.addPlace(new Place(EnumTypePlace.Vélo));
 			}
 			
 			// Ajout des véhicules dans les places
@@ -94,6 +87,21 @@ public class InitBD {
 			// ======================================
 			// FIN STATIONS            
 			// ======================================
+			
+			// ======================================
+			// AFFICHAGE CONSOLE            
+			// ======================================
+			// Lister les catégories
+			List<CategorieVehicule> catVehicules = service.getCatVehicules();
+			for (CategorieVehicule cv : catVehicules) {
+				System.out.println(cv);
+			}
+			
+			// Lister les véhicules
+/*			List<Vehicule> vehiculesList = service.getVehicules();
+			for (Vehicule v : vehiculesList) {
+				System.out.println(v);
+			}*/
 			
 		} catch (PersistenceException pe) {
 			pe.printStackTrace();
